@@ -26,6 +26,10 @@ window.onload = () => {
 	let btnPlay = document.querySelector("#play");
 	btnPlay.addEventListener("click", function(){
 		bear.play();
+		btnPlay.innerHTML ="Pause";
+		btnPlay.addEventListener("click",function(){
+			bear.pause();
+		});
 	});
 };
 
