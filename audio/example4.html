@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+	<meta charset="utf-8">
+	<title>BGMを再生＞JSのみ＆事前ロード</title>
+
+	<style>
+		#start{ display: none; }	/* MP3がロードされるまでボタンを非表示 */
+	</style>
+</head>
+<body>
+
+<form>
+	<button id="start" type="button">再生スタート</button>
+</form>
+
+<script>
+window.onload = () => {
+	let bear = new Audio("sound/bgm/bearintheforest.mp3");
+	bear.addEventListener("canplaythrough", () => {
+		alert("森のくまさんの読み込みが完了しました！");
+
+		//再生ボタンを表示
+		let btnStart = document.querySelector("#start");
+		btnStart.style.display = "block";
+
+		//再生ボタンのイベント設定
+		btnStart.addEventListener("click", () => {
+			bear.play();
+		});
+	});
+};
+
+//------------------------------------------------------
+// ToDo: ユーザービリティを向上しよう
+//------------------------------------------------------
+// 1. 読み込んでいる最中は画像(image/loading.gif)を表示しよう
+// 2. 読み込みが完了したらSE(sound/se/内のファイルのいずれか)を再生しよう
+//      ※SEの再生には事前に読み込みが完了していないとタイミングがあいません
+
+</script>
+</body>
+</html>

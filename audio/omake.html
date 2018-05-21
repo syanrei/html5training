@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+	<meta charset="utf-8">
+	<title>画像の事前ロード</title>
+
+    <link href="css/style5.css" rel="stylesheet">
+</head>
+<body>
+
+<!-- #contentsは最初は非表示(css/style5.css) -->
+<div id="contents">
+	<ul id="gallary">
+	</ul>
+</div>
+
+<div id="nowloading">
+	<div id="nowloading-info">
+		<img src="image/loading.gif">
+	</div>
+</div>
+
+<script>
+window.onload = () => {
+	let assets = [
+		  "image/gallary/1.jpg"
+		, "image/gallary/2.jpg"
+		, "image/gallary/3.jpg"
+	];
+
+	let callback = function(img){
+		//裏側で画像一覧作成
+		let result = "";
+		for(let i=0; i<img.length; i++){
+			result += "<li><img src=\""+ img[i].src +"\" width=400></li>";
+		}
+		document.querySelector("#gallary").innerHTML = result;
+
+		//アラート
+		alert("読み込み完了");
+
+		//ローディング画面を非表示、画像一覧を表示
+		document.querySelector("#contents").style.display   = "block";
+		document.querySelector("#nowloading").style.display = "none";
+	};
+
+	//プリロード＆完了後の処理
+	IMGLoader(assets, callback);
+};
+
+/**
+ * 画像プリローダ
+ */
+function IMGLoader(list, callback){
+	let img   = [];
+	let count = 0;
+
+	for( let i=0; i<list.length; i++){
+ 		img[i] = new Image();
+		img[i].src = list[i];
+
+		img[i].onload = function() {
+			count++;
+			if(count === list.length){
+				callback(img);
+			}
+		};
+	}
+}
+</script>
+</body>
+</html>
